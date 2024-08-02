@@ -9,6 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn.model_selection import train_test_split
+from sklearn.impute import SimpleImputer
 
 class Data():
     # Initizliaing input and output values of dataset
@@ -17,14 +18,24 @@ class Data():
         self.X = self.dataset.iloc[:, :-1].values
         self.Y = self.dataset.iloc[:, -1].values
     
-    # Spliting dataset into training and test
-    def split_train_test_sets(self):
-        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.X, self.Y, test_size = 1/3)
-    
     # Encoding data
+    def encode_data() -> None:
+        pass
     
-        
+    # Take care of missing data (replace w/ avg)
+    def replace_missing_data(self, lower: int, upper: int, type: str = 'mean') -> None:
+        imputer = SimpleImputer(missing_values=np.nan, strategy=type)
+        imputer.fit(self.X[:, lower:upper])
+        self.X[:, lower:upper] = imputer.transform(self.X[:, lower:upper])
+    
+    # Spliting dataset into training and test
+    def split_train_test_sets(self) -> None:
+        self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(self.X, self.Y, test_size = 1/3)
 
+# Testing
 test = Data('Data.csv')
-test.split_train_test_sets()
-print(test.x_test)
+print(test.X)
+print("\n")
+test.replace_missing_data(lower=2, upper=3, type='median')
+print(test.X)
+
