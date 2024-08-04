@@ -48,14 +48,3 @@ class Data():
         sc = StandardScaler()
         self.x_train[:, lower:upper] = sc.fit_transform(self.x_train[:, lower:upper])
         self.x_test[:, lower:upper] = sc.transform(self.x_test[:, lower:upper]) 
-
-# Testing
-test = Data('Data.csv') 
-test.replace_missing_data(lower=1, upper=3)
-test.one_hot_encode(lower=0, upper=1)
-test.label_encode()
-test.create_train_test_sets(0.2)
-test.standardization(lower=3, upper=len(test.x_train))
-print(test.x_train)
-print(test.x_test)
-
